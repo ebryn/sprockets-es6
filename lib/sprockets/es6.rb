@@ -28,6 +28,9 @@ module Sprockets
       data = input[:data]
       result = input[:cache].fetch(@cache_key + [data]) do
         Babel::Transpiler.transform(data, @options.merge(
+          'moduleIds' => 'true',
+          'moduleId' => input[:environment].split_subpath(input[:load_path], input[:filename]).sub(/\.js\.es6$/, ""),
+          'modules' => 'amd',
           'sourceRoot' => input[:load_path],
           'moduleRoot' => '',
           'filename' => input[:filename],
